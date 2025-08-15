@@ -1,0 +1,307 @@
+basePath: /
+definitions:
+  dtos.APIError:
+    properties:
+      error:
+        type: string
+    type: object
+  dtos.Message:
+    properties:
+      message:
+        type: string
+    type: object
+  dtos.Task:
+    properties:
+      description:
+        type: string
+      title:
+        type: string
+    required:
+    - title
+    type: object
+  dtos.Token:
+    properties:
+      token:
+        type: string
+    type: object
+  dtos.User:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  entities.Task:
+    properties:
+      ID:
+        type: string
+      createAt:
+        type: string
+      description:
+        type: string
+      title:
+        type: string
+      updateAt:
+        type: string
+      userID:
+        type: string
+    type: object
+  pagination.PaginationResult-entities_Task:
+    properties:
+      Err: {}
+      hasNextPage:
+        type: boolean
+      items:
+        items:
+          $ref: '#/definitions/entities.Task'
+        type: array
+      pageCurrent:
+        type: integer
+      totalItems:
+        type: integer
+      totalPages:
+        type: integer
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: API para gerenciamento de usuários e tarefas usando Gin e MongoDB
+  title: API de Autenticação e Tarefas
+  version: "1.0"
+paths:
+  /tasks:
+    get:
+      consumes:
+      - application/json
+      description: Pegar a paginação de tarefas na API
+      parameters:
+      - description: Número da pagina
+        in: query
+        name: page
+        type: integer
+      - description: Número de registros por página
+        in: query
+        name: limitPage
+        type: integer
+      - description: Buscar por qual propriedade de task
+        in: query
+        name: searchField
+        type: string
+      - description: Buscar pelo valor da propriedade da task
+        in: query
+        name: searchValue
+        type: string
+      - description: Ordenar por qual propriedade de task
+        in: query
+        name: sortField
+        type: string
+      - description: Ordenação
+        enum:
+        - ascending
+        - descending
+        in: query
+        name: sortOrder
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Lista de tasks
+          schema:
+            items:
+              $ref: '#/definitions/pagination.PaginationResult-entities_Task'
+            type: array
+        "400":
+          description: Erro de validação
+          schema:
+            $ref: '#/definitions/dtos.APIError'
+      security:
+      - BearerAuth: []
+      summary: Pegar a paginação
+      tags:
+      - tasks
+    post:
+      consumes:
+      - application/json
+      description: Registra uma nova tarefa na API
+      parameters:
+      - description: Dados do usuário
+        in: body
+        name: task
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.Task'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Tarefa criada
+          schema:
+            $ref: '#/definitions/dtos.Message'
+        "400":
+          description: Erro de validação
+          schema:
+            $ref: '#/definitions/dtos.APIError'
+        "409":
+          description: Erro de conflito, dados ja existem
+          schema:
+            $ref: '#/definitions/dtos.APIError'
+      security:
+      - BearerAuth: []
+      summary: Criar uma nova tarefa
+      tags:
+      - tasks
+  /tasks/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Deleta uma tarefa na API
+      parameters:
+      - description: ID da Task
+        example: '"60c72b2f9b1d8b57b8ed2123"'
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Tarefa por ID
+          schema:
+            $ref: '#/definitions/dtos.Message'
+        "400":
+          description: Erro de validação
+          schema:
+            $ref: '#/definitions/dtos.APIError'
+      security:
+      - BearerAuth: []
+      summary: Deletar uma tarefa por ID
+      tags:
+      - tasks
+    get:
+      consumes:
+      - application/json
+      description: Busca uma nova tarefa na API
+      parameters:
+      - description: ID da Task
+        example: '"60c72b2f9b1d8b57b8ed2123"'
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Tarefa por ID
+          schema:
+            $ref: '#/definitions/entities.Task'
+        "400":
+          description: Erro de validação
+          schema:
+            $ref: '#/definitions/dtos.APIError'
+      security:
+      - BearerAuth: []
+      summary: Buscar uma nova tarefa por ID
+      tags:
+      - tasks
+    put:
+      consumes:
+      - application/json
+      description: Edita uma tarefa na API
+      parameters:
+      - description: ID da Task
+        example: '"60c72b2f9b1d8b57b8ed2123"'
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Dados do usuário
+        in: body
+        name: task
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.Task'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Tarefa por ID
+          schema:
+            $ref: '#/definitions/dtos.Message'
+        "400":
+          description: Erro de validação
+          schema:
+            $ref: '#/definitions/dtos.APIError'
+      security:
+      - BearerAuth: []
+      summary: Editar uma tarefa por ID
+      tags:
+      - tasks
+  /users:
+    post:
+      consumes:
+      - application/json
+      description: Registra um novo usuário na API
+      parameters:
+      - description: Dados do usuário
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.User'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Usuário criado
+          schema:
+            $ref: '#/definitions/dtos.Message'
+        "400":
+          description: Erro de validação
+          schema:
+            $ref: '#/definitions/dtos.APIError'
+        "409":
+          description: Erro de conflito, dados ja existem
+          schema:
+            $ref: '#/definitions/dtos.APIError'
+      summary: Criar um novo usuário
+      tags:
+      - users
+  /users/login:
+    post:
+      consumes:
+      - application/json
+      description: Fazer o login do usuário
+      parameters:
+      - description: Dados do usuário
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Usuário login
+          schema:
+            $ref: '#/definitions/dtos.Token'
+        "400":
+          description: Erro de login
+          schema:
+            $ref: '#/definitions/dtos.APIError'
+      summary: Criar o login do usuário
+      tags:
+      - users
+securityDefinitions:
+  BearerAuth:
+    description: 'Value: Bearer abc... (Bearer+space+token)'
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

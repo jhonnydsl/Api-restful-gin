@@ -1,4 +1,4 @@
-Authentication and Task API
+# Authentication and Task API
 
 A RESTful API built with Go, using the Gin framework and MongoDB, featuring JWT authentication and Swagger documentation.
 
@@ -13,6 +13,20 @@ MongoDB
 JWT
 
 Swagger
+
+✨ Features
+
+User authentication with JWT
+
+Task management (create, update, delete, list)
+
+Middleware for authentication and CORS
+
+MongoDB integration for persistent storage
+
+Pagination support for task listing
+
+API documentation with Swagger
 
 📦 Installation
 
@@ -33,18 +47,5 @@ PORT=8080
 
 4. Run the project
    go run main.go
-
-📂 Project structure
-.
-├── src
-│ ├── controllers # Endpoint logic
-│ ├── repositorys # MongoDB connection and operations
-│ ├── utils
-│ │ └── middlewares # Middlewares (CORS, JWT, etc.)
-│ └── ...
-├── .env # Environment variables (do not commit to GitHub)
-├── go.mod
-├── go.sum
-└── main.go
 
 Swagger available at: http://localhost:8080/swagger/index.html

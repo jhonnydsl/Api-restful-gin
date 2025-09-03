@@ -1,47 +1,50 @@
-# API de Autenticação e Tarefas
+Authentication and Task API
 
-API RESTful desenvolvida em **Go** utilizando o framework **Gin** e banco de dados **MongoDB**, com autenticação via **JWT** e documentação **Swagger**.
+A RESTful API built with Go, using the Gin framework and MongoDB, featuring JWT authentication and Swagger documentation.
 
-## 🚀 Tecnologias
+🚀 Technologies
 
-- [Go](https://go.dev/)
-- [Gin](https://gin-gonic.com/)
-- [MongoDB](https://www.mongodb.com/)
-- [JWT](https://jwt.io/)
-- [Swagger](https://swagger.io/)
+Go
 
-## 📦 Instalação
+Gin
 
-1. **Clonar o repositório**  
-   `git clone https://github.com/jhonnydsl/api-restful-gin.git && cd api-restful-gin`
+MongoDB
 
-2. **Instalar dependências**  
-   `go mod tidy`
+JWT
 
-3. **Configurar variáveis de ambiente**  
-   Criar um arquivo `.env` na raiz do projeto com:  
-   `MONGO_URI=mongodb://localhost:27017`  
-   `MONGO_DB_NAME=nome_do_banco`  
-   `MONGO_COLLECTION=nome_da_colecao`  
-   `JWT_SECRET=seu_segredo_jwt`  
-   `PORT=8080`
+Swagger
 
-4. **Rodar o projeto**  
-   `go run main.go`
+📦 Installation
 
-## 📂 Estrutura do projeto
+1. Clone the repository
+   git clone https://github.com/jhonnydsl/api-restful-gin.git && cd api-restful-gin
 
+2. Install dependencies
+   go mod tidy
+
+3. Set up environment variables
+   Create a .env file in the project root with:
+
+MONGO_URI=mongodb://localhost:27017
+MONGO_DB_NAME=your_database_name
+MONGO_COLLECTION=your_collection_name
+JWT_SECRET=your_jwt_secret
+PORT=8080
+
+4. Run the project
+   go run main.go
+
+📂 Project structure
 .
 ├── src
-│ ├── controllers # Lógica dos endpoints
-│ ├── repositorys # Conexão e operações com MongoDB
+│ ├── controllers # Endpoint logic
+│ ├── repositorys # MongoDB connection and operations
 │ ├── utils
-│ │ └── middlewares # Middlewares (CORS, JWT, etc)
+│ │ └── middlewares # Middlewares (CORS, JWT, etc.)
 │ └── ...
-├── .env # Variáveis de ambiente (não subir no GitHub)
+├── .env # Environment variables (do not commit to GitHub)
 ├── go.mod
 ├── go.sum
 └── main.go
 
-Swagger disponível em:  
-`http://localhost:8080/swagger/index.html`
+Swagger available at: http://localhost:8080/swagger/index.html
